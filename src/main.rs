@@ -4,18 +4,22 @@ use std::thread;
 use std::time;
 
 #[derive(Parser)]
-#[command(author, version, about, long_about = None)]
+#[command(
+    author = "Jonathan Milligan",
+    version,
+    about = "Yet another Pomodoro timer"
+)]
 struct Args {
     // How long the work time should be
-    #[arg(short, long)]
+    #[arg(short, long, help = "Work duration")]
     work: u64,
 
     // How long the break time should be
-    #[arg(short, long)]
+    #[arg(short, long, help = "Chill duration")]
     chill: u64,
 
     // How many times to repeat the cycle
-    #[arg(short, long, default_value = "1")]
+    #[arg(short, long, default_value = "1", help = "How many times to repeat")]
     repeat: u64,
 }
 
