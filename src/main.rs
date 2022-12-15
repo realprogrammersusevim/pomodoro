@@ -26,6 +26,10 @@ struct Args {
     // Optionally name the work session
     #[arg(short, long, help = "Name of the work session")]
     name: Option<String>,
+
+    // Flag to disable notifications
+    #[arg(short, long, help = "Disable notifications")]
+    alert: bool,
 }
 
 fn main() {
@@ -48,12 +52,13 @@ fn main() {
             ));
             thread::sleep(time::Duration::from_secs(1));
 
-            // Send a notification when the work session is over
-            Notification::new()
-                .summary("Pomodoro")
-                .body("Work session is over!")
-                .show()
-                .unwrap();
+            if !args.alert {
+                Notification::new()
+                    .summary("Pomodoro")
+                    .body("Work session is over!")
+                    .show()
+                    .unwrap();
+            }
         }
 
         // Check if chill is enabled and this isn't the last session
@@ -71,11 +76,13 @@ fn main() {
                 thread::sleep(time::Duration::from_secs(1));
             }
 
-            Notification::new()
-                .summary("Chill over")
-                .body("The chill session is over, back to work")
-                .show()
-                .unwrap();
+            if !args.alert {
+                Notification::new()
+                    .summary("Chill over")
+                    .body("The chill session is over, back to work")
+                    .show()
+                    .unwrap();
+            }
         }
     }
 }
