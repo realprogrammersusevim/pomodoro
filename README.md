@@ -26,6 +26,7 @@ Options:
   -c, --chill <CHILL>    Chill duration [default: 0]
   -r, --repeat <REPEAT>  How many times to repeat [default: 1]
   -n, --name <NAME>      Name of the work session
+  -a, --alert            Disable notifications
   -h, --help             Print help information
   -V, --version          Print version information
 ```
