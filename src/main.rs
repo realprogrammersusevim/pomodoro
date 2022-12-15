@@ -30,7 +30,7 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    for _ in 0..args.repeat {
+    for i in 0..args.repeat {
         if let Some(name) = &args.name {
             println!("Work session: {}", name);
         } else {
@@ -48,17 +48,20 @@ fn main() {
             thread::sleep(time::Duration::from_secs(1));
         }
 
-        println!();
+        // Check if chill is enabled and this isn't the last session
+        if args.chill > 0 && i < args.chill - 1 {
+            println!();
 
-        let chill_pb = ProgressBar::new(args.chill * 60);
-        chill_pb.set_style(ProgressStyle::with_template("{bar:60.blue} {msg}").unwrap());
-        for _ in 0..args.chill * 60 {
-            chill_pb.inc(1);
-            chill_pb.set_message(format!(
-                "{} minutes left",
-                (args.chill - chill_pb.position() / 60)
-            ));
-            thread::sleep(time::Duration::from_secs(1));
+            let chill_pb = ProgressBar::new(args.chill * 60);
+            chill_pb.set_style(ProgressStyle::with_template("{bar:60.blue} {msg}").unwrap());
+            for _ in 0..args.chill * 60 {
+                chill_pb.inc(1);
+                chill_pb.set_message(format!(
+                    "{} minutes left",
+                    (args.chill - chill_pb.position() / 60)
+                ));
+                thread::sleep(time::Duration::from_secs(1));
+            }
         }
     }
 }
