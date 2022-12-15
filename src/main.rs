@@ -1,8 +1,9 @@
+use chrono;
 use clap::Parser;
 use indicatif::{ProgressBar, ProgressStyle};
 use notify_rust::Notification;
 use std::thread;
-use std::time;
+use std::time::Duration;
 
 #[derive(Parser)]
 #[command(
@@ -30,6 +31,10 @@ struct Args {
     // Flag to disable notifications
     #[arg(short, long, help = "Disable notifications")]
     alert: bool,
+
+    // Format time with 24hr clock
+    #[arg(short, long, help = "Use 24hr clock")]
+    time: bool,
 }
 
 fn main() {
@@ -43,16 +48,23 @@ fn main() {
         }
 
         let work_pb = ProgressBar::new(args.work * 60);
+        let work_end = chrono::Local::now() + chrono::Duration::minutes(args.work as i64);
+        let formatted_work_end = match args.time {
+            false => work_end.format("%I:%M %p").to_string(),
+            true => work_end.format("%H:%M").to_string(),
+        };
         work_pb.set_style(ProgressStyle::with_template("{bar:60.green} {msg}").unwrap());
         for _ in 0..args.work * 60 {
             work_pb.inc(1);
             work_pb.set_message(format!(
-                "{} minutes left",
-                (args.work - work_pb.position() / 60)
+                "{}m {}s - {}",
+                (args.work * 60 - work_pb.position()) / 60,
+                (60 - work_pb.position() % 60),
+                formatted_work_end
             ));
-            thread::sleep(time::Duration::from_secs(1));
+            thread::sleep(Duration::from_secs(1));
 
-            if !args.alert {
+            if args.alert {
                 Notification::new()
                     .summary("Pomodoro")
                     .body("Work session is over!")
@@ -66,17 +78,24 @@ fn main() {
             println!();
 
             let chill_pb = ProgressBar::new(args.chill * 60);
+            let chill_end = chrono::Local::now() + chrono::Duration::minutes(args.chill as i64);
+            let formatted_chill_end = match args.time {
+                false => chill_end.format("%I:%M %p").to_string(),
+                true => chill_end.format("%H:%M").to_string(),
+            };
             chill_pb.set_style(ProgressStyle::with_template("{bar:60.blue} {msg}").unwrap());
             for _ in 0..args.chill * 60 {
                 chill_pb.inc(1);
                 chill_pb.set_message(format!(
-                    "{} minutes left",
-                    (args.chill - chill_pb.position() / 60)
+                    "{}m {}s - {}",
+                    (args.chill * 60 - chill_pb.position()) / 60,
+                    (60 - chill_pb.position() % 60),
+                    formatted_chill_end
                 ));
-                thread::sleep(time::Duration::from_secs(1));
+                thread::sleep(Duration::from_secs(1));
             }
 
-            if !args.alert {
+            if args.alert {
                 Notification::new()
                     .summary("Chill over")
                     .body("The chill session is over, back to work")
