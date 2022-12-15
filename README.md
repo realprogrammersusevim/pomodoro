@@ -10,9 +10,11 @@ made a small tool in Rust to manage my time.
 
 ## Installation
 
-Clone the repository and run `cargo build --release` to create your binary. Then
-move the binary from `target/release/pomodoro` to anywhere you want. I would
-suggest somewhere in your `$PATH` so you can run it from anywhere.
+Clone the repository with
+`git clone "https://github.com/realprogrammersusevim/pomodoro"` and run
+`cargo build --release` to create your binary. Then move the compiled binary
+from `target/release/pomodoro` to anywhere you want. I would suggest somewhere
+in your `$PATH` so you can run it from anywhere.
 
 ## Usage
 
