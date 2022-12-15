@@ -29,6 +29,7 @@ Options:
   -r, --repeat <REPEAT>  How many times to repeat [default: 1]
   -n, --name <NAME>      Name of the work session
   -a, --alert            Disable notifications
+  -t, --time             Use 24hr clock
   -h, --help             Print help information
   -V, --version          Print version information
 ```
