@@ -1,5 +1,6 @@
 use clap::Parser;
 use indicatif::{ProgressBar, ProgressStyle};
+use notify_rust::Notification;
 use std::thread;
 use std::time;
 
@@ -46,10 +47,17 @@ fn main() {
                 (args.work - work_pb.position() / 60)
             ));
             thread::sleep(time::Duration::from_secs(1));
+
+            // Send a notification when the work session is over
+            Notification::new()
+                .summary("Pomodoro")
+                .body("Work session is over!")
+                .show()
+                .unwrap();
         }
 
         // Check if chill is enabled and this isn't the last session
-        if args.chill > 0 && i < args.chill - 1 {
+        if args.chill != 0 && i < args.repeat - 1 {
             println!();
 
             let chill_pb = ProgressBar::new(args.chill * 60);
@@ -62,6 +70,12 @@ fn main() {
                 ));
                 thread::sleep(time::Duration::from_secs(1));
             }
+
+            Notification::new()
+                .summary("Chill over")
+                .body("The chill session is over, back to work")
+                .show()
+                .unwrap();
         }
     }
 }
