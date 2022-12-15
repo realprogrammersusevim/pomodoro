@@ -32,3 +32,7 @@ Options:
   -h, --help             Print help information
   -V, --version          Print version information
 ```
+
+## Showcase
+
+https://user-images.githubusercontent.com/93488695/207989440-121a76a3-63f3-4c51-b981-2a3e0969035f.mov
