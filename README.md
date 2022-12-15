@@ -4,6 +4,10 @@ One day I realized an incredible fact. There are very few Pomodoro CLI tools out
 there. They are incredibly rare. Fortunately I decided to come to the rescue and
 made a small tool in Rust to manage my time.
 
+## Requirements
+
+- Rust compiler
+
 ## Installation
 
 Clone the repository and run `cargo build --release` to create your binary. Then
@@ -13,12 +17,15 @@ suggest somewhere in your `$PATH` so you can run it from anywhere.
 ## Usage
 
 ```help
-Usage: pomodoro [OPTIONS] --work <WORK> --chill <CHILL>
+Yet another Pomodoro timer
+
+Usage: pomodoro [OPTIONS] --work <WORK>
 
 Options:
-  -w, --work <WORK>
-  -c, --chill <CHILL>
-  -r, --repeat <REPEAT>  [default: 1]
+  -w, --work <WORK>      Work duration
+  -c, --chill <CHILL>    Chill duration [default: 0]
+  -r, --repeat <REPEAT>  How many times to repeat [default: 1]
+  -n, --name <NAME>      Name of the work session
   -h, --help             Print help information
   -V, --version          Print version information
 ```
