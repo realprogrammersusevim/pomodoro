@@ -63,14 +63,14 @@ fn main() {
                 formatted_work_end
             ));
             thread::sleep(Duration::from_secs(1));
+        }
 
-            if args.alert {
-                Notification::new()
-                    .summary("Pomodoro")
-                    .body("Work session is over!")
-                    .show()
-                    .unwrap();
-            }
+        if !args.alert {
+            Notification::new()
+                .summary("Pomodoro")
+                .body("Work session is over.")
+                .show()
+                .unwrap();
         }
 
         // Check if chill is enabled and this isn't the last session
@@ -95,7 +95,7 @@ fn main() {
                 thread::sleep(Duration::from_secs(1));
             }
 
-            if args.alert {
+            if !args.alert {
                 Notification::new()
                     .summary("Chill over")
                     .body("The chill session is over, back to work")
