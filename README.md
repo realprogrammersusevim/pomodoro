@@ -1,8 +1,9 @@
 # Pomodoro
 
 One day I realized an incredible fact. There are very few Pomodoro CLI tools out
-there. They are incredibly rare. Fortunately I decided to come to the rescue and
-made a small tool in Rust to manage my time.
+there. They are incredibly rare. No developers ever build pomodoro timers as a
+simple project when they're learning a new language. Fortunately I decided to
+come to the rescue and made a small tool in Rust to manage my time.
 
 ## Requirements
 
@@ -13,8 +14,13 @@ made a small tool in Rust to manage my time.
 Clone the repository with
 `git clone "https://github.com/realprogrammersusevim/pomodoro"` and run
 `cargo build --release` to create your binary. Then move the compiled binary
-from `target/release/pomodoro` to anywhere you want. I would suggest somewhere
+from `target/release/pomodoro` to wherever you want. I would suggest somewhere
 in your `$PATH` so you can run it from anywhere.
+
+**Note:** macOS has security features that prevent a binary from sending system
+notifications from outside a secured location. If you're on a Mac you'll need to
+put the `pomodoro` binary in either `/usr/local/bin/` or `/Applications/`, with
+`/usr/local/bin/` being the preferred location.
 
 ## Usage
 
